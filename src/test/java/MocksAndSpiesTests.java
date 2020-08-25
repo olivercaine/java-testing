@@ -6,19 +6,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
+class ClassUnderTest {
+    static final String RESPONSE_REAL = "RESPONSE_REAL";
+    String aMethod() {
+        return RESPONSE_REAL;
+    }
+}
+
 class MocksAndSpiesTests {
 
     private static final String RESPONSE_MOCKED = "RESPONSE_MOCKED";
 
     private static final String RESPONSE_SPY = "RESPONSE_SPY";
 
-    private static final String RESPONSE_REAL = "RESPONSE_REAL";
-
-    private class ClassUnderTest {
-        String aMethod() {
-            return RESPONSE_REAL;
-        }
-    }
 
     @Test
     void givenARealClass_whenCallingAMethod_thenResponseShouldBeReal() {
@@ -29,7 +29,7 @@ class MocksAndSpiesTests {
         String result = classUnderTest.aMethod();
 
         // Assert
-        assertEquals(RESPONSE_REAL, result);
+        assertEquals(ClassUnderTest.RESPONSE_REAL, result);
     }
 
     @Test
@@ -67,7 +67,7 @@ class MocksAndSpiesTests {
         String result = classUnderTest.aMethod();
 
         // Assert
-        assertEquals(RESPONSE_REAL, result);
+        assertEquals(ClassUnderTest.RESPONSE_REAL, result);
     }
 
     @Test
@@ -79,7 +79,7 @@ class MocksAndSpiesTests {
         String result = classUnderTest.aMethod();
 
         // Assert
-        assertEquals(RESPONSE_REAL, result);
+        assertEquals(ClassUnderTest.RESPONSE_REAL, result);
     }
 
     @Test

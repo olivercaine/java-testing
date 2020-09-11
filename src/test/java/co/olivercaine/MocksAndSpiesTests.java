@@ -2,7 +2,6 @@ package co.olivercaine;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
@@ -21,7 +20,7 @@ class MocksAndSpiesTests {
     private static final String RESPONSE_SPY = "RESPONSE_SPY";
 
     @Test
-    void givenARealClass_whenCallingAMethod_thenResponseShouldBeReal() {
+    void returnsRealMethodWhenRealMethodCalled() {
         // Arrange
         ClassUnderTest classUnderTest = new ClassUnderTest();
 
@@ -33,7 +32,7 @@ class MocksAndSpiesTests {
     }
 
     @Test
-    void givenAMockedClass_whenCallingAMethod_thenResponseShouldBeNull() {
+    void returnsNullWhenCallingRealMethodOnMockedClass() {
         // Arrange
         ClassUnderTest classUnderTest = Mockito.mock(ClassUnderTest.class);
 
@@ -45,7 +44,7 @@ class MocksAndSpiesTests {
     }
 
     @Test
-    void givenAMockedClassWithMockedMethod_whenCallingAMethod_thenResponseShouldMocked() {
+    void returnsMockedMethodWhenCallingMockedMethodOnAMockedClass() {
         // Arrange
         ClassUnderTest classUnderTest = Mockito.mock(ClassUnderTest.class);
         Mockito.when(classUnderTest.aMethod()).thenReturn(RESPONSE_MOCKED);
@@ -58,7 +57,7 @@ class MocksAndSpiesTests {
     }
 
     @Test
-    void givenAMockedClassWithRealMethodCalled_whenCallingAMethod_thenResponseShouldReal() {
+    void returnsRealMethodWhenMockIsConfiguredToCallRealMethod() {
         // Arrange
         ClassUnderTest classUnderTest = Mockito.mock(ClassUnderTest.class);
         when(classUnderTest.aMethod()).thenCallRealMethod();
@@ -71,7 +70,7 @@ class MocksAndSpiesTests {
     }
 
     @Test
-    void givenASpyClass_whenCallingAMethod_thenResponseShouldBeReal() {
+    void returnsRealWhenCallingRealMethodOnSpyClass() {
         // Arrange
         ClassUnderTest classUnderTest = Mockito.spy(ClassUnderTest.class);
 
@@ -83,7 +82,7 @@ class MocksAndSpiesTests {
     }
 
     @Test
-    void givenASpyClassWithASpyMethod_whenCallingAMethod_thenResponseShouldBeSpy() {
+    void returnsSpyMethodWhenCallingSpiedMethodOnASpyClass() {
         // Arrange
         ClassUnderTest classUnderTest = Mockito.spy(ClassUnderTest.class);
         Mockito.when(classUnderTest.aMethod()).thenReturn(RESPONSE_SPY);

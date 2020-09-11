@@ -1,3 +1,4 @@
+package co.olivercaine;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,7 +19,6 @@ class MocksAndSpiesTests {
     private static final String RESPONSE_MOCKED = "RESPONSE_MOCKED";
 
     private static final String RESPONSE_SPY = "RESPONSE_SPY";
-
 
     @Test
     void givenARealClass_whenCallingAMethod_thenResponseShouldBeReal() {

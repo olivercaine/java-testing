@@ -21,8 +21,8 @@ public class CustomDisplayNameGenerator {
         }
 
         static String makeCamelCaseMoreReadable(String camelCase) {
-            camelCase = camelCase.replaceAll("([A-Z])", " $1"); // Split CamelCase to two words
-            camelCase = camelCase.replaceAll("([0-9]+)", " $1");
+            camelCase = camelCase.replaceAll("([A-Z])", " $1"); // Separate CamelCasing to words
+            camelCase = camelCase.replaceAll("([0-9]+)", " $1"); // Split numbers
             camelCase = camelCase.toLowerCase();
             camelCase = camelCase.substring(0, 1).toUpperCase() + camelCase.substring(1); // Capitalise beginning of sentence
             camelCase = camelCase.replaceAll("_", " "); // Remove underscores

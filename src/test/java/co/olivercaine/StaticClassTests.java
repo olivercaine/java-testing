@@ -8,17 +8,23 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.powermock.api.mockito.PowerMockito.when;
+
 class StaticClassWrapper {
-    public static void main(String[] args) {
-        StaticClass.aMethod();
+    static String callStaticClassMethod() {
+        return StaticClass.doSomeStuff();
     }
 }
 
 class StaticClass {
     private StaticClass() { }
-    static void aMethod() {
+
+    static String doSomeStuff() {
         System.out.println("Static aMethod() called");
+        return "Real aMethod() called";
     }
+
 }
 
 @RunWith(PowerMockRunner.class)
@@ -26,15 +32,28 @@ class StaticClass {
 public class StaticClassTests {
 
     @Test
-    public void should_be_able_to_assert_static_method_called() {
+    public void assertsStaticMethodCalled() {
         // Arrange
         PowerMockito.mockStatic(StaticClass.class);
 
         // Act
-        StaticClassWrapper.main(null);
+        StaticClassWrapper.callStaticClassMethod();
 
         // Assert
         PowerMockito.verifyStatic(StaticClass.class, Mockito.times(1));
-        StaticClass.aMethod();
+        StaticClass.doSomeStuff();
+    }
+
+    @Test
+    public void mocksStaticMethod() {
+        // Arrange
+        PowerMockito.mockStatic(StaticClass.class);
+        when(StaticClass.doSomeStuff()).thenReturn("Mocked return string from static method");
+
+        // Act
+        String returnedString = StaticClassWrapper.callStaticClassMethod();
+
+        // Assert
+        assertEquals("Mocked return string from static method", returnedString);
     }
 }

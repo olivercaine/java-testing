@@ -2,6 +2,11 @@ package co.olivercaine;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import static co.olivercaine.ClassUnderTest.RESPONSE_REAL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
@@ -9,6 +14,9 @@ import static org.mockito.Mockito.when;
 class ClassUnderTest {
     static final String RESPONSE_REAL = "RESPONSE_REAL";
     String aMethod() {
+        return RESPONSE_REAL;
+    }
+    private String privateMethod() {
         return RESPONSE_REAL;
     }
 }
@@ -28,7 +36,7 @@ class MocksAndSpiesTests {
         String result = classUnderTest.aMethod();
 
         // Assert
-        assertEquals(ClassUnderTest.RESPONSE_REAL, result);
+        assertEquals(RESPONSE_REAL, result);
     }
 
     @Test
@@ -66,7 +74,7 @@ class MocksAndSpiesTests {
         String result = classUnderTest.aMethod();
 
         // Assert
-        assertEquals(ClassUnderTest.RESPONSE_REAL, result);
+        assertEquals(RESPONSE_REAL, result);
     }
 
     @Test
@@ -78,7 +86,7 @@ class MocksAndSpiesTests {
         String result = classUnderTest.aMethod();
 
         // Assert
-        assertEquals(ClassUnderTest.RESPONSE_REAL, result);
+        assertEquals(RESPONSE_REAL, result);
     }
 
     @Test
@@ -92,5 +100,19 @@ class MocksAndSpiesTests {
 
         // Assert
         assertEquals(RESPONSE_SPY, result);
+    }
+
+    @Test
+    void canCallPrivateMethodUsingReflection() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        // Arrange
+        ClassUnderTest yourClass = new ClassUnderTest();
+        Method privateMethod = ClassUnderTest.class.getDeclaredMethod("privateMethod");
+        privateMethod.setAccessible(true);
+
+        // Act
+        String result = (String) privateMethod.invoke(yourClass);
+
+        // Assert
+        assertEquals(RESPONSE_REAL, result);
     }
 }
